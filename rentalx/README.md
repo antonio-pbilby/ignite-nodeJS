@@ -15,14 +15,12 @@ Quais são as regras que norteiam as funcionalidades da aplicação, como ela po
 **RF**
 
 Deve ser possível cadastrar um novo carro.
-Deve ser possível listar todas as categorias.
 
 **RN**
 
 Não deve ser possível cadastar mais de um carro com a mesma placa.
-Não deve ser possível alterar a placa de um carro já cadastrado.
 Ao ser cadastrado, por padrão, o carro deve estar disponível.
-Somente um usuário administrador deve ser capaz de cadastrar um carro.
+* Somente um usuário administrador deve ser capaz de cadastrar um carro.
 
 # Listagem de carros
 

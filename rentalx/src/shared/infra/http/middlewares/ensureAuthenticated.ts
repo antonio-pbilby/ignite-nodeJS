@@ -36,7 +36,6 @@ export default async function ensureAuthenticated(
       id: user_id,
     };
 
-    // console.log(sub);
     next();
   } catch (e) {
     throw new AppError("Invalid token!", 401);

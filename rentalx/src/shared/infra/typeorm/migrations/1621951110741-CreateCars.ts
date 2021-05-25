@@ -44,7 +44,7 @@ export class CreateCars1621951110741 implements MigrationInterface {
           {
             name: "category_id",
             type: "uuid",
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: "created_at",
@@ -55,7 +55,7 @@ export class CreateCars1621951110741 implements MigrationInterface {
         foreignKeys: [
           {
             name: "FKCategoryCar",
-            referencedTableName: "cars",
+            referencedTableName: "categories",
             referencedColumnNames: ["id"],
             columnNames: ["category_id"],
             onDelete: "SET NULL",
