@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 
-import { AppError } from "../errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 
 export default (
   err: Error,
   req: Request,
   res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction
 ): Response => {
   if (err instanceof AppError) {

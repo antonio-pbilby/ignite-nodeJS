@@ -1,13 +1,14 @@
 import express from "express";
 import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
-import "./database";
+import "@shared/infra/typeorm";
 
-import "./shared/container";
+import "@shared/container";
 
-import handleError from "./middlewares/handleError";
-import { router } from "./routes";
-import swaggerFile from "./swagger.json";
+import handleError from "@shared/infra/http/middlewares/handleError";
+import { router } from "@shared/infra/http/routes";
+
+import swaggerFile from "../../../swagger.json";
 
 const app = express();
 
