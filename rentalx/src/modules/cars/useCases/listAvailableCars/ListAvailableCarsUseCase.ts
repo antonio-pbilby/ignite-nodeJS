@@ -1,13 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
+import { IListAvailableCarsDTO } from "@modules/cars/dtos/IListAvailableCarsDTO";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
-
-interface IRequest {
-  category_id?: string;
-  brand?: string;
-  name?: string;
-}
 
 @injectable()
 class ListAvailableCarsUseCase {
@@ -16,12 +11,16 @@ class ListAvailableCarsUseCase {
     private carsRepository: ICarsRepository
   ) {}
 
-  async execute({ category_id, brand, name }: IRequest): Promise<Car[]> {
-    const carsList = await this.carsRepository.findAvailable(
+  async execute({
+    category_id,
+    brand,
+    name,
+  }: IListAvailableCarsDTO): Promise<Car[]> {
+    const carsList = await this.carsRepository.findAvailable({
       brand,
       category_id,
-      name
-    );
+      name,
+    });
 
     return carsList;
   }

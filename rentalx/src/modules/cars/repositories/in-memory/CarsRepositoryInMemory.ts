@@ -1,4 +1,5 @@
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
+import { IListAvailableCarsDTO } from "@modules/cars/dtos/IListAvailableCarsDTO";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 
 import { ICarsRepository } from "../ICarsRepository";
@@ -10,11 +11,11 @@ class CarsRepositoryInMemory implements ICarsRepository {
   }
   cars: Car[] = [];
 
-  async findAvailable(
-    brand?: string,
-    category_id?: string,
-    name?: string
-  ): Promise<Car[]> {
+  async findAvailable({
+    brand,
+    category_id,
+    name,
+  }: IListAvailableCarsDTO): Promise<Car[]> {
     let availableCars = this.cars.filter((car) => car.available);
 
     if (brand) {
