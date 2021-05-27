@@ -1,5 +1,13 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  // ManyToOne,
+  PrimaryColumn,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
+
+// import { Car } from "./Car";
 
 @Entity("cars_image")
 class CarImage {
@@ -14,6 +22,9 @@ class CarImage {
 
   @CreateDateColumn()
   created_at: Date;
+
+  // @ManyToOne(() => Car)
+  // car: Car;
 
   constructor() {
     if (!this.id) this.id = uuid();

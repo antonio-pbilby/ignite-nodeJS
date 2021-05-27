@@ -1,3 +1,0 @@
-// describe("Upload car image", () => {
-
-// })
