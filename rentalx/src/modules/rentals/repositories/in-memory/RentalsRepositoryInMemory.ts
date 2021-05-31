@@ -4,6 +4,9 @@ import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "../IRentalsRepository";
 
 class RentalsRepositoryInMemory implements IRentalsRepository {
+  async listByUser(user_id: string): Promise<Rental[]> {
+    return this.rentals.filter((rental) => rental.user_id === user_id);
+  }
   rentals: Rental[] = [];
 
   async create({

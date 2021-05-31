@@ -2,12 +2,16 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   // JoinColumn,
   // OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+
+import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 
 // import { User } from "@modules/accounts/infra/typeorm/entities/User";
 // import { Car } from "@modules/cars/infra/typeorm/entities/Car";
@@ -16,6 +20,10 @@ import { v4 as uuid } from "uuid";
 class Rental {
   @PrimaryColumn()
   id?: string;
+
+  @ManyToOne(() => Car)
+  @JoinColumn({ name: "car_id" })
+  car: Car;
 
   @Column()
   car_id: string;
