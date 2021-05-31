@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 
+import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
 import { RentalsRepositoryInMemory } from "@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory";
 import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 import { AppError } from "@shared/errors/AppError";
@@ -9,16 +10,30 @@ import { CreateRentalUseCase } from "./CreateRentalUseCase";
 let rentalsRepositoryInMemory: RentalsRepositoryInMemory;
 let createRentalUseCase: CreateRentalUseCase;
 let dayjsDateProvider: DayjsDateProvider;
+let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe("Create rental", () => {
   const dayAdd24Hours = dayjs().add(1, "day").toDate();
-  beforeEach(() => {
+  beforeEach(async () => {
     dayjsDateProvider = new DayjsDateProvider();
     rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
+    carsRepositoryInMemory = new CarsRepositoryInMemory();
     createRentalUseCase = new CreateRentalUseCase(
       rentalsRepositoryInMemory,
-      dayjsDateProvider
+      dayjsDateProvider,
+      carsRepositoryInMemory
     );
+
+    await carsRepositoryInMemory.create({
+      name: "car",
+      description: "car desc",
+      daily_rate: 50,
+      license_plate: "aaa1111",
+      fine_amount: 70,
+      brand: "car brand",
+      category_id: "categoryId",
+      id: "car id",
+    });
   });
 
   it("Should be able to create a new rental", async () => {

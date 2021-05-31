@@ -31,11 +31,6 @@ describe("Create Category Controller", () => {
     token = responseToken.body.token;
   });
 
-  afterAll(async () => {
-    await connection.dropDatabase();
-    await connection.close();
-  });
-
   it("Should be able to create a new category", async () => {
     const response = await request(app)
       .post("/categories/")
@@ -62,5 +57,10 @@ describe("Create Category Controller", () => {
       });
 
     expect(response.status).toBe(400);
+  });
+
+  afterAll(async () => {
+    await connection.dropDatabase();
+    await connection.close();
   });
 });

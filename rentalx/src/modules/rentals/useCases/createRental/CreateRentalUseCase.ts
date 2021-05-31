@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { ICreateRentalDTO } from "@modules/rentals/dtos/ICreateRentalDTO";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
@@ -12,7 +13,9 @@ class CreateRentalUseCase {
     @inject("RentalsRepository")
     private rentalsRepository: IRentalsRepository,
     @inject("DayjsDateProvider")
-    private dateProvider: IDateProvider
+    private dateProvider: IDateProvider,
+    @inject("CarsRepository")
+    private carsRepository: ICarsRepository
   ) {}
 
   async execute({
@@ -23,10 +26,13 @@ class CreateRentalUseCase {
     const minHours = 24;
     // O ALUGUEL DEVE TER DURAÇÃO MÍNIMA DE 24HRS
 
-    const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(
-      car_id
-    );
-    if (carUnavailable) throw new AppError("Car is unavailable!");
+    const car = await this.carsRepository.findById(car_id);
+
+    if (!car) throw new AppError("Car does not exist");
+
+    const carAvailable = car.available;
+
+    if (!carAvailable) throw new AppError("Car is unavailable!");
 
     const rentalOpenToUser = await this.rentalsRepository.findOpenRentalByUser(
       user_id
@@ -48,6 +54,8 @@ class CreateRentalUseCase {
       car_id,
       expected_return_date,
     });
+
+    await this.carsRepository.updateAvailable(car_id, false);
 
     return rental;
   }
