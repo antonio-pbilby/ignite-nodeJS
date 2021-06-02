@@ -8,4 +8,5 @@ export interface IUsersTokenRepository {
     refresh_token: string
   ): Promise<UserToken>;
   deleteById(id: string): Promise<void>;
+  findByToken(refresh_token: string): Promise<UserToken>;
 }

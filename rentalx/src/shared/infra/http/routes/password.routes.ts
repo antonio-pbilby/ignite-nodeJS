@@ -1,11 +1,14 @@
 import { Router } from "express";
 
-import { RecoverPasswordController } from "@modules/accounts/useCases/recoverPassword/RecoverPasswordController";
+import { ForgotPasswordMailController } from "@modules/accounts/useCases/forgotPasswordMail/ForgotPasswordMailController";
+import { ResetPasswordController } from "@modules/accounts/useCases/resetPassword/ResetPasswordController";
 
 const passwordRoutes = Router();
 
-const recoverPasswordController = new RecoverPasswordController();
+const forgotPasswordMailController = new ForgotPasswordMailController();
+const resetPasswordController = new ResetPasswordController();
 
-passwordRoutes.post("/forgot", recoverPasswordController.handle);
+passwordRoutes.post("/forgot", forgotPasswordMailController.handle);
+passwordRoutes.post("/reset", resetPasswordController.handle);
 
 export { passwordRoutes };
