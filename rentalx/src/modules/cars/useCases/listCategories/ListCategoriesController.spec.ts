@@ -6,7 +6,7 @@ import { v4 as uuid } from "uuid";
 import { app } from "@shared/infra/http/app";
 import createConnection from "@shared/infra/typeorm";
 
-let token: string;
+let refresh_token: string;
 let connection: Connection;
 
 describe("List Categories", () => {
@@ -28,7 +28,7 @@ describe("List Categories", () => {
       password: "admin",
     });
 
-    token = responseToken.body.token;
+    refresh_token = responseToken.body.refresh_token;
 
     await request(app)
       .post("/categories")
@@ -37,7 +37,7 @@ describe("List Categories", () => {
         description: "category description",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refresh_token}`,
       });
   });
 
