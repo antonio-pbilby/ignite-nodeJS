@@ -1,6 +1,7 @@
 import express from "express";
 import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
+import "dotenv/config";
 import "reflect-metadata";
 
 import "@shared/container";
