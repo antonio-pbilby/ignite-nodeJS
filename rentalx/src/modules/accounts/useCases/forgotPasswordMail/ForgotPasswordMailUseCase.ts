@@ -17,12 +17,14 @@ export class ForgotPasswordMailUseCase {
     private usersTokenRepository: IUsersTokenRepository,
     @inject("DayjsDateProvider")
     private dateProvider: IDateProvider,
-    @inject("EtherealMailProvider")
+    @inject("MailProvider")
     private mailProvider: IMailProvider
   ) {}
 
   async execute(email: string): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
+
+    if (!user) throw new AppError("User does not exist!");
 
     const templatePath = resolve(
       __dirname,
@@ -32,8 +34,6 @@ export class ForgotPasswordMailUseCase {
       "emails",
       "forgotPassword.hbs"
     );
-
-    if (!user) throw new AppError("User does not exist!");
 
     const token = uuid();
 
